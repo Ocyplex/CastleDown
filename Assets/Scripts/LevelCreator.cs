@@ -9,13 +9,14 @@ public class LevelCreator : MonoBehaviour
     public Wall myWall;
     public ShowCube myShowCube;
     private Vector3[] wallPos;
-    private int levelSize = 30;
-
+    private int levelSize = 10; // Must be even number
+    public List<Cube> cubeList;
+    public int level = 1; //hardness
 
     void Start()
     {
         wallPos = new Vector3[4];
-        createWallPos();
+        CreateWallPos();
         createLevel();
     }
 
@@ -29,17 +30,17 @@ public class LevelCreator : MonoBehaviour
                 Instantiate(myCube,new Vector3(transform.position.x + i,transform.position.y,transform.position.z + j), Quaternion.identity);
             }
         }
-        createShowCube();
-        createWalls();
+        CreateShowCube();
+        CreateWalls();
     }
 
-    void createShowCube()
+    void CreateShowCube()
     {
         myShowCube.setLightRange(levelSize);
         Instantiate(myShowCube, new Vector3(transform.position.x - 0.5f + levelSize / 2, transform.position.y + 5, transform.position.z - 0.5f + levelSize / 2), Quaternion.identity);
     }
 
-    void createWalls()
+    void CreateWalls()
     {
         Vector3 scaleChange = new Vector3(levelSize, 3f, 1f);
         myWall.transform.localScale = scaleChange;
@@ -56,7 +57,7 @@ public class LevelCreator : MonoBehaviour
         }
     }
 
-    void createWallPos()
+    void CreateWallPos()
     {
         wallPos[0] = new Vector3(levelSize/2 -0.5f ,1, transform.position.z + levelSize);
         wallPos[1] = new Vector3(levelSize / 2 - 0.5f, 1, -1);
