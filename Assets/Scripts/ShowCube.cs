@@ -40,7 +40,6 @@ public class ShowCube : MonoBehaviour
             myColor = "blue";
         }
         yield return new WaitForSeconds(3);
-        Debug.Log("Change colores");
         StartCoroutine(RandColor());
     }
 }

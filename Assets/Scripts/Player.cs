@@ -5,15 +5,21 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private float speed = 5f;
-    private float gravity = -27f;
-    private Vector3 force;
+
+
     private CharacterController myCharContro;
 
+    private Vector3 forceJump;
+    public Transform groundCheck;
+    public LayerMask groundMask;
+    public float groundDistance = 0.3f;
+    private float gravity = -9.8f;
+    private float jumpHeight = 4f;
+    bool isOnGround;
 
     void Start()
     {
         myCharContro = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
 
@@ -26,7 +32,30 @@ public class Player : MonoBehaviour
         myCharContro.Move(move * speed * Time.deltaTime);
 
 
-        force.y += gravity * Time.deltaTime;
-        myCharContro.Move(force * Time.deltaTime);
+        forceJump.y += gravity * Time.deltaTime;
+        myCharContro.Move(forceJump * Time.deltaTime);
+
+
+        isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if(isOnGround && forceJump.y <0)
+        {
+            forceJump.y = -1f;
+        }
+
+        if(Input.GetKeyDown("space") && isOnGround)
+        {
+            Debug.Log("Jump");
+            forceJump.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+    }
+
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Debug.Log("hit name is " + hit.gameObject.name);
+        if(hit.gameObject.GetComponent<PickAble>())
+        {
+            hit.gameObject.GetComponent<PickAble>().UseMe();
+        }
     }
 }

@@ -31,7 +31,7 @@ public class Gun : MonoBehaviour
 
     void FindNearestCube()
     {
-        Debug.Log("Found " + myLevelCreator.cubeList.Count + "cubes!");
+        //Debug.Log("Found " + myLevelCreator.cubeList.Count + "cubes!");
         float nearest = 10f;
 
         for (int i = 0; i < myLevelCreator.cubeList.Count; i++)

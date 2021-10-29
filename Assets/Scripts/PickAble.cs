@@ -6,7 +6,8 @@ public class PickAble : MonoBehaviour
 {
 
     private LevelCreator myLevelCreator;
-    public bool changeColor = false;
+    private float rotationSpeed = 25f;
+
 
     void Start()
     {
@@ -14,10 +15,7 @@ public class PickAble : MonoBehaviour
     }
     private void Update()
     {
-        if(changeColor)
-        {
-            ChangeColores();
-        }
+        RotateMe();
     }
 
     void ChangeColores()
@@ -25,8 +23,20 @@ public class PickAble : MonoBehaviour
         for (int i = 0; i < myLevelCreator.cubeList.Count; i++)
         {
             myLevelCreator.cubeList[i].RandomColor();
-            changeColor = false;
         }
     }
+
+    void RotateMe()
+    {
+        float xAngle = rotationSpeed * Time.deltaTime;
+        transform.Rotate(xAngle,xAngle,xAngle);
+    }
+
+    public void UseMe()
+    {
+        ChangeColores();
+        Destroy(this.gameObject);
+    }
+
 
 }
