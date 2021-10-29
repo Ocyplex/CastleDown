@@ -54,10 +54,14 @@ public class Player : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Debug.Log("hit name is " + hit.gameObject.name);
         if(hit.gameObject.GetComponent<PickAble>())
         {
             hit.gameObject.GetComponent<PickAble>().UseMe(this);
+        }
+
+        if(hit.gameObject.GetComponent<Cube>().gravityBool)
+        {
+            hit.gameObject.GetComponent<Rigidbody>().useGravity = true;
         }
     }
 

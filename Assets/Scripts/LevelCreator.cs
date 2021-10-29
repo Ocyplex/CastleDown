@@ -9,7 +9,7 @@ public class LevelCreator : MonoBehaviour
     public Wall myWall;
     public ShowCube myShowCube;
     public Gun myGun;
-    public PickAble[] myPickable = new PickAble[2];
+    public PickAble[] myPickable = new PickAble[3];
     private Vector3[] wallPos;
     private int levelSize = 16; // Must be even number
     public List<Cube> cubeList;
@@ -36,6 +36,7 @@ public class LevelCreator : MonoBehaviour
         CreateWalls();
         SpawnGun();
         SpawnPickAble();
+        GiveStats();
     }
 
     void CreateShowCube()
@@ -86,5 +87,26 @@ public class LevelCreator : MonoBehaviour
         float randz = Random.Range(2, levelSize-2);
         Instantiate(myGun, new Vector3(randx, 5f, randz), Quaternion.identity);
     }
+
+
+    public void GiveStats()
+    {
+        int blue = 0; int red = 0; int green = 0;
+        for (int i = 0; i < cubeList.Count; i++)
+        {
+            if(cubeList[i].GetComponent<Renderer>().material.color == Color.red)
+            {
+                red++;
+            } else if(cubeList[i].GetComponent<Renderer>().material.color == Color.green)
+            {
+                green++;
+            } else if(cubeList[i].GetComponent<Renderer>().material.color == Color.blue)
+            {
+                blue++;
+            }
+        }
+        Debug.Log("Blue:" + blue + " Red:" + red + " Green:" + green);
+    }
+
 }
 

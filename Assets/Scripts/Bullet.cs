@@ -39,7 +39,6 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.GetComponent<Cube>())
         {
             collision.gameObject.GetComponent<Cube>().DeleteMeFromList();
-            Destroy(collision.gameObject);
             Destroy(this.gameObject);
         }
     }

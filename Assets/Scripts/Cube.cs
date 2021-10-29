@@ -7,12 +7,18 @@ public class Cube : MonoBehaviour
     private LevelCreator myLevelCreator;
     public string myColor;
     public int health;
+    public bool gravityBool;
 
     void Start()
     {
         myLevelCreator = FindObjectOfType<LevelCreator>();
         RandomColor();
         AddMeToList();
+    }
+
+    private void Update()
+    {
+
     }
 
     void AddMeToList()
@@ -44,6 +50,7 @@ public class Cube : MonoBehaviour
             if(myLevelCreator.cubeList[i]==this)
             {
                 myLevelCreator.cubeList.RemoveAt(i);
+                Destroy(this.gameObject);
             }
         }
         
