@@ -9,7 +9,7 @@ public class LevelCreator : MonoBehaviour
     public Wall myWall;
     public ShowCube myShowCube;
     private Vector3[] wallPos;
-    private int levelSize = 10; // Must be even number
+    private int levelSize = 16; // Must be even number
     public List<Cube> cubeList;
     public int level = 1; //hardness
 
