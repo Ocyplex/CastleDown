@@ -32,9 +32,15 @@ public class PickAble : MonoBehaviour
         transform.Rotate(xAngle,xAngle,xAngle);
     }
 
-    public void UseMe()
+    public void UseMe(Player myPlayer_)
     {
+        if(gameObject.name==("Pill(Clone)"))
+        { 
         ChangeColores();
+        }else if(gameObject.name==("Line(Clone)"))
+        {
+            myPlayer_.LineUse();
+        }
         Destroy(this.gameObject);
     }
 

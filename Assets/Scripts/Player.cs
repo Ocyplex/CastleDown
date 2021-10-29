@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public LayerMask groundMask;
     public float groundDistance = 0.3f;
     private float gravity = -9.8f;
-    private float jumpHeight = 4f;
+    private float jumpHeight = 2f;
     bool isOnGround;
 
     void Start()
@@ -47,6 +47,8 @@ public class Player : MonoBehaviour
             Debug.Log("Jump");
             forceJump.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+
+        CheckIfFallen();
     }
 
 
@@ -55,7 +57,24 @@ public class Player : MonoBehaviour
         Debug.Log("hit name is " + hit.gameObject.name);
         if(hit.gameObject.GetComponent<PickAble>())
         {
-            hit.gameObject.GetComponent<PickAble>().UseMe();
+            hit.gameObject.GetComponent<PickAble>().UseMe(this);
         }
     }
+
+    public void LineUse()
+    {
+        speed += 3;
+        jumpHeight += 2;
+    }
+
+
+    void CheckIfFallen()
+    {
+        if(transform.position.y < -5f)
+        {
+            Debug.Log("Dead");
+        }
+    }
+
+
 }

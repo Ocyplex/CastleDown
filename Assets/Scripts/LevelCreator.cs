@@ -8,7 +8,8 @@ public class LevelCreator : MonoBehaviour
     public Cube myCube;
     public Wall myWall;
     public ShowCube myShowCube;
-    public PickAble myPickable;
+    public Gun myGun;
+    public PickAble[] myPickable = new PickAble[2];
     private Vector3[] wallPos;
     private int levelSize = 16; // Must be even number
     public List<Cube> cubeList;
@@ -33,6 +34,7 @@ public class LevelCreator : MonoBehaviour
         }
         CreateShowCube();
         CreateWalls();
+        SpawnGun();
         SpawnPickAble();
     }
 
@@ -69,8 +71,20 @@ public class LevelCreator : MonoBehaviour
 
     void SpawnPickAble()
     {
-        float randx = Random.Range(0, levelSize);
-        float randz = Random.Range(0, levelSize);
-        Instantiate(myPickable, new Vector3(randx, 2f, randz),Quaternion.identity);
+
+        for (int i = 0; i < myPickable.Length; i++)
+        {
+            float randx = Random.Range(0, levelSize);
+            float randz = Random.Range(0, levelSize);
+            Instantiate(myPickable[i], new Vector3(randx, 2f, randz), Quaternion.identity);
+        }
+    }
+
+    void SpawnGun()
+    {
+        float randx = Random.Range(2, levelSize-2);
+        float randz = Random.Range(2, levelSize-2);
+        Instantiate(myGun, new Vector3(randx, 5f, randz), Quaternion.identity);
     }
 }
+

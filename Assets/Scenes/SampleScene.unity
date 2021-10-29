@@ -528,8 +528,9 @@ MonoBehaviour:
   myWall: {fileID: 4608783093151935922, guid: 6e231a16da099e84b80a03dd2e612f44, type: 3}
   myShowCube: {fileID: 3065964827126459382, guid: 23f032d22d38b3d46933643be94c2127,
     type: 3}
-  myPickable: {fileID: 1448339045947713468, guid: 3371178406f1c4d4799a212ea75cb29d,
-    type: 3}
+  myPickable:
+  - {fileID: 3092237242034741499, guid: a4bec1b4c84598a4980d6f2b65856a30, type: 3}
+  - {fileID: 1448339045947713468, guid: 3371178406f1c4d4799a212ea75cb29d, type: 3}
   cubeList: []
   level: 1
 --- !u!4 &1106149949

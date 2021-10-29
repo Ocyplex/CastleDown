@@ -45,9 +45,38 @@ public class Gun : MonoBehaviour
         }     
     }
 
+
+    void FindFarestCube()
+    {
+        float farest = 0; //Maybe Levelsize
+        for (int i = 0; i < myLevelCreator.cubeList.Count; i++)
+        {
+            float test = Vector3.Distance(transform.position, myLevelCreator.cubeList[i].transform.position);
+            if (test > farest && myLevelCreator.cubeList[i].myColor == myShowCube.myColor)
+            {
+                farest = test;
+                myCube = myLevelCreator.cubeList[i];
+            }
+        }
+    }
+
+    void RandomRange()
+    {
+        int rand = Random.Range(0, 2);
+        if(rand == 0)
+        {
+            FindFarestCube();
+        }
+        else
+        {
+            FindNearestCube();
+        }
+    }
+
+
     IEnumerator RegularShooting()
     {
-        FindNearestCube();
+        RandomRange();
         Shoot();
         yield return new WaitForSeconds(3-myLevelCreator.level);
         StartCoroutine(RegularShooting());
