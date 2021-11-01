@@ -8,46 +8,79 @@ public class LevelCreator : MonoBehaviour
     public Cube myCube;
     public Wall myWall;
     public ShowCube myShowCube;
+    public Player myPlayer;
     public Gun myGun;
     public PickAble[] myPickable = new PickAble[3];
-    private Vector3[] wallPos;
+    private Vector3[] wallPos = new Vector3[4];
     private int levelSize = 16; // Must be even number
     public List<Cube> cubeList;
-    public int level = 1; //hardness
+    public int level; //hardness
+    private bool isRunning = false;
+    public bool playerAlive;
+    public int greenCubes, blueCubes, redCubes;
+    public bool giveStats = false;
+    public bool deleteLevel = false;
 
-    void Start()
+    private AudioSource myBackGroundMusic;
+
+    private void Awake()
     {
-        wallPos = new Vector3[4];
         CreateWallPos();
-        createLevel();
+        CreateWalls();
+        myBackGroundMusic = GetComponent<AudioSource>();
+
     }
 
-    void createLevel()
+    private void Update()
     {
-        Debug.Log("Create Level");
+        if(giveStats)
+        {
+            GiveStats();
+            giveStats = false;
+        }
+    }
+
+    public void CreateLevel()
+    {
+        if(!isRunning)
+        { 
+        CreateWallPos();
         for (int i = 0; i < levelSize; i++)
         {
             for (int j = 0; j < levelSize; j++)
             {
                 Instantiate(myCube,new Vector3(transform.position.x + i,transform.position.y,transform.position.z + j), Quaternion.identity);
             }
-        }
-        CreateShowCube();
+        }       
         CreateWalls();
-        SpawnGun();
+        SpawnPlayer();
+
+        isRunning = true;
+        StartCoroutine(Testing());
+        }
+    }
+
+    IEnumerator Testing()
+    {
+        yield return new WaitForSeconds(2);
+        Debug.Log("Testing");
+        CheckCubeAmount();
+        CreateShowCube();
         SpawnPickAble();
-        GiveStats();
+        myBackGroundMusic.Play();
     }
 
     void CreateShowCube()
     {
         myShowCube.setLightRange(levelSize);
+        myShowCube.changer = level;
         Instantiate(myShowCube, new Vector3(transform.position.x - 0.5f + levelSize / 2, transform.position.y + 5, transform.position.z - 0.5f + levelSize / 2), Quaternion.identity);
+        SpawnGun();
     }
 
     void CreateWalls()
     {
-        Vector3 scaleChange = new Vector3(levelSize, 3f, 1f);
+        Vector3 scaleChange = new Vector3(levelSize, 5f, 1f);
         myWall.transform.localScale = scaleChange;
         for (int i = 0; i < wallPos.Length; i++)
         {
@@ -105,8 +138,40 @@ public class LevelCreator : MonoBehaviour
                 blue++;
             }
         }
-        Debug.Log("Blue:" + blue + " Red:" + red + " Green:" + green);
+        Debug.Log("Blue:" + blue + " Red:" + red + " Green:" + green); 
     }
 
+    public void SpawnPlayer()
+    {
+        Instantiate(myPlayer, new Vector3(levelSize / 2f, 1f, levelSize / 2f), Quaternion.identity);
+    }
+
+    public void CheckCubeAmount()
+    {
+        for (int i = 0; i < cubeList.Count; i++)
+        {
+            if (cubeList[i].GetComponent<Renderer>().material.color == Color.red)
+            {
+                redCubes++;
+            }
+            else if (cubeList[i].GetComponent<Renderer>().material.color == Color.green)
+            {
+                greenCubes++;
+            }
+            else if (cubeList[i].GetComponent<Renderer>().material.color == Color.blue)
+            {
+                blueCubes++;
+            }
+        }
+    }
+
+    public void DeleteAll() //Cubes
+    {
+        for (int i = 0; i < cubeList.Count; i++)
+        {
+            Destroy(cubeList[i].gameObject);
+        }
+        blueCubes = 0; redCubes = 0; greenCubes = 0;
+    }
 }
 

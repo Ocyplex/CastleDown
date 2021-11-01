@@ -8,6 +8,7 @@ public class Cube : MonoBehaviour
     public string myColor;
     public int health;
     public bool gravityBool;
+    private int outOfRange = -15;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class Cube : MonoBehaviour
 
     private void Update()
     {
-
+        FallOut();
     }
 
     void AddMeToList()
@@ -51,8 +52,32 @@ public class Cube : MonoBehaviour
             {
                 myLevelCreator.cubeList.RemoveAt(i);
                 Destroy(this.gameObject);
+                DeleteMyColor();
             }
+        }     
+    }
+
+
+    void FallOut()
+    {
+        if(transform.position.y < outOfRange)
+        {
+            DeleteMeFromList();
         }
-        
+    }
+
+
+    void DeleteMyColor()
+    {
+        if(myColor == "red")
+        {
+            myLevelCreator.redCubes--;
+        } else if(myColor == "green")
+        {
+            myLevelCreator.greenCubes--;
+        } else if(myColor == "blue")
+        {
+            myLevelCreator.blueCubes--;
+        }
     }
 }

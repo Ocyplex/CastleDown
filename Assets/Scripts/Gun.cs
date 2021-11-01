@@ -8,17 +8,25 @@ public class Gun : MonoBehaviour
     public Bullet myBullet;
     private Cube myCube;
     private LevelCreator myLevelCreator;
+    private AudioSource myGunSound;
+    private GameMaster myGameMaster;
+
+
+
 
     void Start()
     {
         myLevelCreator = FindObjectOfType<LevelCreator>();
         myShowCube = FindObjectOfType<ShowCube>();
+        myGunSound = GetComponent<AudioSource>();
+        myGameMaster = FindObjectOfType<GameMaster>();
+        myGameMaster.AddMe(this);
         StartCoroutine(RegularShooting());
     }
 
     private void Update()
     {
-
+        DeleteMe();
     }
 
     void Shoot()
@@ -27,6 +35,7 @@ public class Gun : MonoBehaviour
         myBullet.myCube = myCube;
         myBullet.hasTarget = true;
         Instantiate(myBullet, start, Quaternion.identity);
+        myGunSound.Play();
     }
 
     void FindNearestCube()
@@ -60,16 +69,35 @@ public class Gun : MonoBehaviour
         }
     }
 
+    void FindRandomCube()
+    {
+        int rand = Random.Range(0, myLevelCreator.cubeList.Count);
+        if(myLevelCreator.cubeList[rand].myColor == myShowCube.myColor)
+        {
+            myCube = myLevelCreator.cubeList[rand];
+        }else
+        {
+            FindRandomCube();
+        }
+    }
+
     void RandomRange()
     {
-        int rand = Random.Range(0, 2);
+        int rand = Random.Range(0, 3);
         if(rand == 0)
         {
             FindFarestCube();
+            Debug.Log("Farest");
         }
-        else
+        else if(rand == 1)
         {
             FindNearestCube();
+            Debug.Log("Nearest");
+        }
+        else if(rand == 2)
+        {
+            FindRandomCube();
+            Debug.Log("Random");
         }
     }
 
@@ -78,7 +106,15 @@ public class Gun : MonoBehaviour
     {
         RandomRange();
         Shoot();
-        yield return new WaitForSeconds(3-myLevelCreator.level);
+        yield return new WaitForSeconds(3.5f-myLevelCreator.level);
         StartCoroutine(RegularShooting());
+    }
+
+    void DeleteMe()
+    {
+        if(myLevelCreator.deleteLevel)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

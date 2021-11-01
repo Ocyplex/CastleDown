@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class ShowCube : MonoBehaviour
 {
-
+    private LevelCreator myLevelCreator;
+    private GameMaster myGameMaster;
     public Light myLight;
     public string myColor;
-
+    public int changer;
+    
     private void Start()
     {
-        StartCoroutine(RandColor());
-        
+        myLevelCreator = FindObjectOfType <LevelCreator>();
+        myGameMaster = FindObjectOfType<GameMaster>();
+        myGameMaster.AddMe(this);
+        StartCoroutine(RandColor());   
+    }
+
+    private void Update()
+    {
+        DeleteMe();
     }
 
     public void setLightRange(int lightRange_)
@@ -24,22 +33,31 @@ public class ShowCube : MonoBehaviour
     IEnumerator RandColor()
     {
         int rand = Random.Range(0, 3);
-        if (rand == 0)
+        if (rand == 0 && myLevelCreator.greenCubes > 0)
         {
             gameObject.GetComponent<Renderer>().material.color = Color.green;
             myColor = "green";
         }
-        else if (rand == 1)
+        else if (rand == 1 && myLevelCreator.redCubes > 0)
         {
             gameObject.GetComponent<Renderer>().material.color = Color.red;
             myColor = "red";
         }
-        else if (rand == 2)
+        else if (rand == 2 && myLevelCreator.blueCubes > 0)
         {
             gameObject.GetComponent<Renderer>().material.color = Color.blue;
             myColor = "blue";
         }
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4-changer);
         StartCoroutine(RandColor());
     }
+
+    void DeleteMe()
+    {
+        if (myLevelCreator.deleteLevel)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
 }

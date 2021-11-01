@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         SetDirection();
+        StartCoroutine(DestroyMe());
     }
 
     private void Update()
@@ -41,5 +42,10 @@ public class Bullet : MonoBehaviour
             collision.gameObject.GetComponent<Cube>().DeleteMeFromList();
             Destroy(this.gameObject);
         }
+    }
+
+    IEnumerator DestroyMe()
+    {
+        yield return new WaitForSeconds(4f);
     }
 }

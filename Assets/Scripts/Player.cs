@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
 
     private CharacterController myCharContro;
-
+    private GameMaster myGameMaster;
     private Vector3 forceJump;
     public Transform groundCheck;
     public LayerMask groundMask;
@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         myCharContro = GetComponent<CharacterController>();
+        myGameMaster = FindObjectOfType<GameMaster>();
+        myGameMaster.AddMe(this);
     }
 
 
@@ -47,8 +49,6 @@ public class Player : MonoBehaviour
             Debug.Log("Jump");
             forceJump.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-
-        CheckIfFallen();
     }
 
 
@@ -70,15 +70,4 @@ public class Player : MonoBehaviour
         speed += 3;
         jumpHeight += 2;
     }
-
-
-    void CheckIfFallen()
-    {
-        if(transform.position.y < -5f)
-        {
-            Debug.Log("Dead");
-        }
-    }
-
-
 }

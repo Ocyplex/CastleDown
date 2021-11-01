@@ -6,6 +6,7 @@ public class PickAble : MonoBehaviour
 {
 
     private LevelCreator myLevelCreator;
+    private GameMaster myGameMaster;
     private ShowCube myShowCube;
     private float rotationSpeed = 25f;
 
@@ -14,6 +15,8 @@ public class PickAble : MonoBehaviour
     {
         myLevelCreator = FindObjectOfType<LevelCreator>();
         myShowCube = FindObjectOfType<ShowCube>();
+        myGameMaster = FindObjectOfType<GameMaster>();
+        myGameMaster.AddMe(this);
     }
     private void Update()
     {
@@ -27,6 +30,7 @@ public class PickAble : MonoBehaviour
         {
             myLevelCreator.cubeList[i].RandomColor();
         }
+        myLevelCreator.CheckCubeAmount();
     }
 
     void RotateMe()
