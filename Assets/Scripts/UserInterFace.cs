@@ -7,14 +7,14 @@ public class UserInterFace : MonoBehaviour
 {
     public Canvas myCanvas;
     private LevelCreator myLevelCreator;
-    private Camera menuCam;
+    public GameObject menuCam;
     private GameMaster myGameMaster;
-
+    public Text myText;
+    public Text endText;
 
     void Start()
     {
         myLevelCreator = FindObjectOfType<LevelCreator>();
-        menuCam = FindObjectOfType<Camera>();
         myCanvas = FindObjectOfType<Canvas>();
         myGameMaster = FindObjectOfType<GameMaster>();
     }
@@ -22,31 +22,46 @@ public class UserInterFace : MonoBehaviour
     public void SetDifficultyNormal()
     {
         myLevelCreator.level = 2;
-        myCanvas.enabled = false;
-        menuCam.enabled = false;
-        myGameMaster.gameON = true;
+        Reset();
     }
 
     public void SetDifficultyEasy()
     {
         myLevelCreator.level = 1;
-        myCanvas.enabled = false;
-        menuCam.enabled = false;
-        myGameMaster.gameON = true;
+        Reset();
+
     }
 
     public void SetDifficultyHard()
     {
         myLevelCreator.level = 3;
-        myCanvas.enabled = false;
-        menuCam.enabled = false;
-        myGameMaster.gameON = true;
+        Reset();
+
     }
 
     public void ActivateAll()
     {
         myCanvas.enabled = true;
-        menuCam.enabled = true;
+        menuCam.SetActive(true);
     }
 
+    private void Reset()
+    {
+        myCanvas.enabled = false;
+        myGameMaster.gameON = true;
+        menuCam.SetActive(false);
+        myGameMaster.mySoundScript.MakeReset();
+        myText.text = "Game created by Kevin Cicholinski";;
+    }
+
+    public void ShowMusicInfo()
+    {
+        myText.text = "8Bit Menu by David Renda and Retro Platforming by David Fesliyan";
+    }
+    /*
+    void ShowStats()
+    {
+        endText.text = "You survived " + myLevelCreator.destroyedCubes + " cubes!";
+    }
+    */
 }

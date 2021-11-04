@@ -60,12 +60,12 @@ public class PickAble : MonoBehaviour
                 }
             }
         }
-        Destroy(this.gameObject);
+        myGameMaster.DeletePickAbleFromList(this);
     }
 
     private void MyColor()
     {
-        if (gameObject.name == ("Magic(Clone)"))
+        if (gameObject.name == ("Magic(Clone)") & myShowCube != null)
         {
             gameObject.GetComponent<Renderer>().material.color = myShowCube.GetComponent<Renderer>().material.color;
 
@@ -79,5 +79,4 @@ public class PickAble : MonoBehaviour
             myLevelCreator.cubeList[i].gravityBool = true;
         }
     }
-
 }

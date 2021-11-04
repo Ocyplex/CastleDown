@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float speed = 0.5f;
+    private float speed = 0.75f;
     private Vector3 myDir;
     public bool hasTarget;
     public Cube myCube;
@@ -31,12 +31,12 @@ public class Bullet : MonoBehaviour
 
     void GoToTarget()
     {
-        transform.Translate(myDir * Time.deltaTime);
+        transform.Translate(myDir * speed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Hit" + collision.gameObject.name);
+        Debug.Log(collision.gameObject.name + " bullet hit this");
         if (collision.gameObject.GetComponent<Cube>())
         {
             collision.gameObject.GetComponent<Cube>().DeleteMeFromList();
@@ -46,6 +46,7 @@ public class Bullet : MonoBehaviour
 
     IEnumerator DestroyMe()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
+        Destroy(this.gameObject);
     }
 }

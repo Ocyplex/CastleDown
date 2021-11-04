@@ -6,7 +6,6 @@ public class Player : MonoBehaviour
 {
     private float speed = 5f;
 
-
     private CharacterController myCharContro;
     private GameMaster myGameMaster;
     private Vector3 forceJump;
@@ -62,6 +61,11 @@ public class Player : MonoBehaviour
         if(hit.gameObject.GetComponent<Cube>().gravityBool)
         {
             hit.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        }
+
+        if(hit.gameObject.GetComponent<Bullet>())
+        {
+            Destroy(hit.gameObject);
         }
     }
 

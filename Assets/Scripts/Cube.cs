@@ -7,7 +7,7 @@ public class Cube : MonoBehaviour
     private LevelCreator myLevelCreator;
     public string myColor;
     public int health;
-    public bool gravityBool;
+    public bool gravityBool = false;
     private int outOfRange = -15;
 
     void Start()

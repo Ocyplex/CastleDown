@@ -18,10 +18,6 @@ public class ShowCube : MonoBehaviour
         StartCoroutine(RandColor());   
     }
 
-    private void Update()
-    {
-        DeleteMe();
-    }
 
     public void setLightRange(int lightRange_)
     {
@@ -52,12 +48,9 @@ public class ShowCube : MonoBehaviour
         StartCoroutine(RandColor());
     }
 
-    void DeleteMe()
+    public void DeleteMe()
     {
-        if (myLevelCreator.deleteLevel)
-        {
             Destroy(this.gameObject);
-        }
     }
 
 }

@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class GameMaster : MonoBehaviour
 {
-    private Player myPlayer;
-    private LevelCreator myLevelCreator;
-    private ShowCube myShowCube;
-    private Gun myGun;
-    private PickAble[] myPickAbles = new PickAble[3];
+    [SerializeField]private Player myPlayer;
+    [SerializeField] private LevelCreator myLevelCreator;
+    [SerializeField] private ShowCube myShowCube;
+    [SerializeField] private Gun myGun;
+    [SerializeField]private List<PickAble> pickAbleList;
     [SerializeField] private UserInterFace myUI;
-    public bool gameON;
-    // Start is called before the first frame update
+    [SerializeField] public SoundScript mySoundScript;
+    public bool gameON = false;
+
+
     void Start()
     {
         myLevelCreator = GetComponent<LevelCreator>();
         myUI = GetComponent<UserInterFace>();
+        mySoundScript = GetComponent<SoundScript>();
     }
 
-    // Update is called once per frame
+  
+
+
     void Update()
     {
-        if(gameON)
+        if(gameON && myPlayer != null)
         { 
+
         CheckPlayerDead();
         }
     }
@@ -44,46 +50,65 @@ public class GameMaster : MonoBehaviour
 
     public void AddMe(PickAble myPickAble_)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            if (myPickAbles[i] == null)
-            {
-                myPickAbles[i] = myPickAble_;
-                break;
-            }
-        }
+        pickAbleList.Add(myPickAble_);
     }
 
 
     void CheckPlayerDead()
     {
-        if (myPlayer.transform.position.y < -5f)
+        if (myPlayer.transform.position.y < -5f && myPlayer != null)
         {
-            Debug.Log("Jere");
-            DeleteLevel();
+            gameON = false;
             ActivateUI();
             Destroy(myPlayer.gameObject);
-            gameON = false;
+            DeleteLevel();
+            myLevelCreator.isRunning = false;
+            myPlayer = null;
+            mySoundScript.MakeReset();
         }
     }
 
     void DeleteLevel()
     {
-        for (int i = 0; i < myLevelCreator.cubeList.Count; i++)
+        int realLenght = myLevelCreator.cubeList.Count;
+        for (int i = 0; i < realLenght; i++)
         {
             myLevelCreator.DeleteAll();
         }
-        Destroy(myGun.gameObject);
-        Destroy(myShowCube.gameObject);
-        for (int i = 0; i < myPickAbles.Length; i++)
-        {
-            Destroy(myPickAbles[i].gameObject);
-        }    
+        myGun.DeleteMe();
+        myShowCube.DeleteMe();
+        DeleteAllPickable();
+
     }
 
     void ActivateUI()
     {
         myUI.ActivateAll();
+        
         Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void DeletePickAbleFromList(PickAble pickAble_)
+    {
+        int realCount = pickAbleList.Count;
+        for (int i = 0; i < realCount; i++)
+        {
+            if(pickAbleList[i] == pickAble_)
+            {
+                pickAbleList.RemoveAt(i);
+                Destroy(pickAble_.gameObject);
+            }
+        }
+    }
+
+    void DeleteAllPickable()
+    {
+
+        int realCount = pickAbleList.Count;
+        for (int i = 0; i < realCount; i++)
+        {
+            Destroy(pickAbleList[i].gameObject);
+        }
+        pickAbleList.Clear();
     }
 }

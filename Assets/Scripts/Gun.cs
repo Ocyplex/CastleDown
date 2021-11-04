@@ -6,11 +6,11 @@ public class Gun : MonoBehaviour
 {
     private ShowCube myShowCube;
     public Bullet myBullet;
-    private Cube myCube;
+    [SerializeField]private Cube myCube;
     private LevelCreator myLevelCreator;
     private AudioSource myGunSound;
     private GameMaster myGameMaster;
-
+    private bool reseted = false;
 
 
 
@@ -24,10 +24,7 @@ public class Gun : MonoBehaviour
         StartCoroutine(RegularShooting());
     }
 
-    private void Update()
-    {
-        DeleteMe();
-    }
+
 
     void Shoot()
     {
@@ -87,34 +84,32 @@ public class Gun : MonoBehaviour
         if(rand == 0)
         {
             FindFarestCube();
-            Debug.Log("Farest");
         }
         else if(rand == 1)
         {
             FindNearestCube();
-            Debug.Log("Nearest");
         }
         else if(rand == 2)
         {
             FindRandomCube();
-            Debug.Log("Random");
         }
     }
+
+    
 
 
     IEnumerator RegularShooting()
     {
-        RandomRange();
+        //RandomRange();
+        FindRandomCube();
         Shoot();
         yield return new WaitForSeconds(3.5f-myLevelCreator.level);
         StartCoroutine(RegularShooting());
     }
 
-    void DeleteMe()
+    public void DeleteMe()
     {
-        if(myLevelCreator.deleteLevel)
-        {
+            StopCoroutine(RegularShooting());
             Destroy(this.gameObject);
-        }
     }
 }
