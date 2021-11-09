@@ -110,7 +110,7 @@ public class LevelCreator : MonoBehaviour
             Instantiate(myPickable[i], new Vector3(randx, 2f, randz), Quaternion.identity);
         }
     }
-
+    
     void SpawnGun()
     {
         Debug.Log("Spawn gun");
@@ -118,6 +118,7 @@ public class LevelCreator : MonoBehaviour
         float randz = Random.Range(2, levelSize-2); 
         Instantiate(myGun, new Vector3(randx, 5f, randz), Quaternion.identity);
     }
+    
 
     public void SpawnPlayer()
     {

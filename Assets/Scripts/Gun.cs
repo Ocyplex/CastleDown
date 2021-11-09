@@ -17,13 +17,14 @@ public class Gun : MonoBehaviour
 
     void Start()
     {
+        transform.Rotate(new Vector3(90f, 0f, 0f));
         myLevelCreator = FindObjectOfType<LevelCreator>();
         myShowCube = FindObjectOfType<ShowCube>();
         myGunSound = GetComponent<AudioSource>();
         myGameMaster = FindObjectOfType<GameMaster>();
         myGameMaster.AddMe(this);
         myCR = FindObjectOfType<CanonRotator>();
-        myCB = FindObjectOfType<CanonBarrel>();
+        //myCB = FindObjectOfType<CanonBarrel>();
         myCR.AddGunScript(this);
         StartCoroutine(RegularShooting());
     }
@@ -32,9 +33,7 @@ public class Gun : MonoBehaviour
     {
         if(myCube == null && myGameMaster.gameON && !reseted)
         {
-            Debug.Log("This crazy shit!");
-            StopCoroutine(RegularShooting());
-            StartCoroutine(RegularShooting());
+            Debug.Log("Make reset!");
             reseted = true;
         }
     }
@@ -44,7 +43,7 @@ public class Gun : MonoBehaviour
         Vector3 start = new Vector3(transform.position.x, transform.position.y - 0.6f,transform.position.z);
         myBullet.myCube = myCube;
         myBullet.hasTarget = true;
-        Instantiate(myBullet, start, Quaternion.identity);
+        myCR.Shoot(myBullet);
         myGunSound.Play();
     }
 
@@ -116,7 +115,7 @@ public class Gun : MonoBehaviour
         //RandomRange();
         FindRandomCube();
         myCR.RotateToTarget();
-        myCB.RotateToTarget();
+        //myCB.RotateToTarget();
         Shoot();
         yield return new WaitForSeconds(3.5f-myLevelCreator.level);
         StartCoroutine(RegularShooting());

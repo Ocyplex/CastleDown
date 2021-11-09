@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
             hit.gameObject.GetComponent<PickAble>().UseMe(this);
         }
 
-        if(hit.gameObject.GetComponent<Cube>().gravityBool)
+        if(hit.gameObject.GetComponent<Cube>().gravityBool == true)
         {
             hit.gameObject.GetComponent<Rigidbody>().useGravity = true;
         }

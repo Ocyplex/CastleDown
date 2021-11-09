@@ -7,7 +7,9 @@ public class CanonRotator : MonoBehaviour
     private Gun myGun;
     public GameObject myBody;
     public Cube myCube;
+    public Bullet myBullet;
     private float rotationSpeed = 60f;
+
 
 
     void Update()
@@ -40,5 +42,12 @@ public class CanonRotator : MonoBehaviour
     public void AddGunScript(Gun myGun_)
     {
         myGun = myGun_;
+    }
+
+
+    public void Shoot(Bullet myBullet_)
+    {
+        Vector3 bulletStartPos = new Vector3(transform.position.x,transform.position.y-0.125f,transform.position.z);
+        Instantiate(myBullet_, bulletStartPos, Quaternion.identity);
     }
 }

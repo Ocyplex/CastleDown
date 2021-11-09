@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
         Debug.Log(collision.gameObject.name + " bullet hit this");
         if (collision.gameObject.GetComponent<Cube>())
         {
-            //collision.gameObject.GetComponent<Cube>().DeleteMeFromList();
+            collision.gameObject.GetComponent<Cube>().DeleteMeFromList();
             Destroy(this.gameObject);
         }
     }
