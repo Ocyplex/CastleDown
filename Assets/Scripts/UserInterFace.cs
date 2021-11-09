@@ -12,6 +12,7 @@ public class UserInterFace : MonoBehaviour
     public Text myText;
     public Text endText;
 
+
     void Start()
     {
         myLevelCreator = FindObjectOfType<LevelCreator>();
@@ -51,18 +52,16 @@ public class UserInterFace : MonoBehaviour
         myGameMaster.gameON = true;
         menuCam.SetActive(false);
         myGameMaster.mySoundScript.MakeReset();
-       // ShowStats();
-        myText.text = "Game created by Kevin Cicholinski";;
+        myText.text = "Game created by Kevin Cicholinski";
     }
 
     public void ShowMusicInfo()
     {
         myText.text = "8Bit Menu by David Renda and Retro Platforming by David Fesliyan";
     }
-    /*
-    void ShowStats()
+    
+    public void ShowStats()
     {
-        endText.text = "You survived " + myGameMaster.cubesLeft.ToString() + " cubes!";
-    }
-    */
+        endText.text = "Only " + myGameMaster.cubesLeft.ToString() + " cubes left!";
+    }   
 }

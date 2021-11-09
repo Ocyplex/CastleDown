@@ -87,6 +87,7 @@ public class GameMaster : MonoBehaviour
         myGun.DeleteMe();
         myShowCube.DeleteMe();
         DeleteAllPickable();
+        myUI.ShowStats();
 
     }
 

@@ -8,6 +8,7 @@ public class PickAble : MonoBehaviour
     private LevelCreator myLevelCreator;
     private GameMaster myGameMaster;
     private ShowCube myShowCube;
+    private Gun myGun;
     private float rotationSpeed = 25f;
 
 
@@ -16,6 +17,7 @@ public class PickAble : MonoBehaviour
         myLevelCreator = FindObjectOfType<LevelCreator>();
         myShowCube = FindObjectOfType<ShowCube>();
         myGameMaster = FindObjectOfType<GameMaster>();
+        myGun = FindObjectOfType<Gun>();
         myGameMaster.AddMe(this);
     }
     private void Update()
@@ -44,11 +46,11 @@ public class PickAble : MonoBehaviour
         if(gameObject.name==("Pill(Clone)"))
         { 
         ChangeColores();
-        GravityCubes();
         }else if(gameObject.name==("Line(Clone)"))
         {
             myPlayer_.LineUse();
             myLevelCreator.GiveStats();
+            myGun.IncreaseFireRate();
         }else if(gameObject.name == ("Magic(Clone)"))
         {
             int listOld = myLevelCreator.cubeList.Count;
@@ -59,6 +61,8 @@ public class PickAble : MonoBehaviour
                     myLevelCreator.cubeList[i].DeleteMeFromList();
                 }
             }
+            myGun.ResetAim();
+            GravityCubes();
         }
         myGameMaster.DeletePickAbleFromList(this);
     }

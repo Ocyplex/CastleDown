@@ -5,6 +5,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     private ShowCube myShowCube;
+    private float fireRate = 0;
     public Bullet myBullet;
     [SerializeField]public Cube myCube;
     private LevelCreator myLevelCreator;
@@ -40,7 +41,6 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
-        Vector3 start = new Vector3(transform.position.x, transform.position.y - 0.6f,transform.position.z);
         myBullet.myCube = myCube;
         myBullet.hasTarget = true;
         myCR.Shoot(myBullet);
@@ -107,7 +107,10 @@ public class Gun : MonoBehaviour
         }
     }
 
-    
+    public void IncreaseFireRate()
+    {
+        fireRate = myLevelCreator.level * 0.1f;
+    }
 
 
     IEnumerator RegularShooting()
@@ -117,7 +120,7 @@ public class Gun : MonoBehaviour
         myCR.RotateToTarget();
         //myCB.RotateToTarget();
         Shoot();
-        yield return new WaitForSeconds(3.5f-myLevelCreator.level);
+        yield return new WaitForSeconds(3.5f-myLevelCreator.level - fireRate);
         StartCoroutine(RegularShooting());
     }
 
@@ -126,4 +129,11 @@ public class Gun : MonoBehaviour
             StopCoroutine(RegularShooting());
             Destroy(this.gameObject);
     }
+
+    public void ResetAim()//When pickable destroy aim cube of gun
+    {
+        StopCoroutine(RegularShooting());
+    }
+
+
 }
