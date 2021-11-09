@@ -11,7 +11,9 @@ public class GameMaster : MonoBehaviour
     [SerializeField]private List<PickAble> pickAbleList;
     [SerializeField] private UserInterFace myUI;
     [SerializeField] public SoundScript mySoundScript;
+    public int cubesLeft = 0;
     public bool gameON = false;
+    
 
 
     void Start()
@@ -53,11 +55,18 @@ public class GameMaster : MonoBehaviour
         pickAbleList.Add(myPickAble_);
     }
 
+    public void SaveCubes()
+    {
+        Debug.Log("I return Cubes " + myLevelCreator.cubeList.Count);
+        cubesLeft = myLevelCreator.cubeList.Count;
+    }
+
 
     void CheckPlayerDead()
     {
         if (myPlayer.transform.position.y < -5f && myPlayer != null)
         {
+            SaveCubes();
             gameON = false;
             ActivateUI();
             Destroy(myPlayer.gameObject);

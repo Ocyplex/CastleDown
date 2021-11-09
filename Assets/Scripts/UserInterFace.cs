@@ -51,6 +51,7 @@ public class UserInterFace : MonoBehaviour
         myGameMaster.gameON = true;
         menuCam.SetActive(false);
         myGameMaster.mySoundScript.MakeReset();
+       // ShowStats();
         myText.text = "Game created by Kevin Cicholinski";;
     }
 
@@ -61,7 +62,7 @@ public class UserInterFace : MonoBehaviour
     /*
     void ShowStats()
     {
-        endText.text = "You survived " + myLevelCreator.destroyedCubes + " cubes!";
+        endText.text = "You survived " + myGameMaster.cubesLeft.ToString() + " cubes!";
     }
     */
 }

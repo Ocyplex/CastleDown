@@ -10,6 +10,7 @@ public class LevelCreator : MonoBehaviour
     public ShowCube myShowCube;
     public Player myPlayer;
     public Gun myGun;
+    public GameObject myTower;
     public PickAble[] myPickable = new PickAble[3];
     private Vector3[] wallPos = new Vector3[4];
     private int levelSize = 16; // Must be even number
@@ -18,13 +19,13 @@ public class LevelCreator : MonoBehaviour
     public bool isRunning = false;
     public int greenCubes, blueCubes, redCubes;
     public bool giveStats = false;
-    public int destroyedCubes;
 
 
     private void Awake()
     {
         CreateWallPos();
         CreateWalls();
+        CreateTower();
     }
 
 
@@ -146,12 +147,25 @@ public class LevelCreator : MonoBehaviour
 
     public void DeleteAll() //Cubes
     {
-        destroyedCubes = cubeList.Count;
         for (int i = 0; i < cubeList.Count; i++)
         {
             Destroy(cubeList[i].gameObject);
         }
         blueCubes = 0; redCubes = 0; greenCubes = 0;
+    }
+
+    private void CreateTower()
+    {
+        Vector3[] towerPos = new Vector3[4];
+        towerPos[0] = new Vector3(levelSize + 0.5f, 1, levelSize + 0.5f);
+        towerPos[1] = new Vector3(levelSize + 0.5f, 1, -1.5f);
+        towerPos[2] = new Vector3( -1.5f, 1, -1.5f);
+        towerPos[3] = new Vector3(-1.5f, 1, levelSize + 0.5f);
+        for (int i = 0; i < towerPos.Length; i++)
+        {
+            Instantiate(myTower, towerPos[i], Quaternion.identity);
+        }
+        
     }
 
     public void GiveStats()

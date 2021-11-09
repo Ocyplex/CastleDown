@@ -6,12 +6,13 @@ public class Gun : MonoBehaviour
 {
     private ShowCube myShowCube;
     public Bullet myBullet;
-    [SerializeField]private Cube myCube;
+    [SerializeField]public Cube myCube;
     private LevelCreator myLevelCreator;
     private AudioSource myGunSound;
     private GameMaster myGameMaster;
     private bool reseted = false;
-
+    private CanonRotator myCR;
+    private CanonBarrel myCB;
 
 
     void Start()
@@ -21,10 +22,22 @@ public class Gun : MonoBehaviour
         myGunSound = GetComponent<AudioSource>();
         myGameMaster = FindObjectOfType<GameMaster>();
         myGameMaster.AddMe(this);
+        myCR = FindObjectOfType<CanonRotator>();
+        myCB = FindObjectOfType<CanonBarrel>();
+        myCR.AddGunScript(this);
         StartCoroutine(RegularShooting());
     }
 
-
+    private void Update()
+    {
+        if(myCube == null && myGameMaster.gameON && !reseted)
+        {
+            Debug.Log("This crazy shit!");
+            StopCoroutine(RegularShooting());
+            StartCoroutine(RegularShooting());
+            reseted = true;
+        }
+    }
 
     void Shoot()
     {
@@ -102,6 +115,8 @@ public class Gun : MonoBehaviour
     {
         //RandomRange();
         FindRandomCube();
+        myCR.RotateToTarget();
+        myCB.RotateToTarget();
         Shoot();
         yield return new WaitForSeconds(3.5f-myLevelCreator.level);
         StartCoroutine(RegularShooting());

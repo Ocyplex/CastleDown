@@ -173,4 +173,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myLight: {fileID: 1553159704928219447}
   myColor: 
-  changer: 3
+  changer: 2
