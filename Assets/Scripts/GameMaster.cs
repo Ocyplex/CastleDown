@@ -11,6 +11,7 @@ public class GameMaster : MonoBehaviour
     [SerializeField]private List<PickAble> pickAbleList;
     [SerializeField] private UserInterFace myUI;
     [SerializeField] public SoundScript mySoundScript;
+    public List<Player> myPlayers;
     public int cubesLeft = 0;
     public bool gameON = false;
     
@@ -28,16 +29,18 @@ public class GameMaster : MonoBehaviour
 
     void Update()
     {
+        /*
         if(gameON && myPlayer != null)
         { 
-
         CheckPlayerDead();
         }
+        */
     }
 
     public void AddMe(Player myPlayer_)
     {
-        myPlayer = myPlayer_;
+        //myPlayer = myPlayer_;
+        myPlayers.Add(myPlayer_);
     }
 
     public void AddMe(Gun myGun_)

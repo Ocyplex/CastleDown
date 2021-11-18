@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UserInterFace : MonoBehaviour
@@ -11,7 +12,7 @@ public class UserInterFace : MonoBehaviour
     private GameMaster myGameMaster;
     public Text myText;
     public Text endText;
-
+    public Text playerText;
 
     void Start()
     {
@@ -64,4 +65,12 @@ public class UserInterFace : MonoBehaviour
     {
         endText.text = "Only " + myGameMaster.cubesLeft.ToString() + " cubes left!";
     }   
+
+    public void JoinGame(PlayerInput playerInput)
+    {
+        playerText.text = myGameMaster.myPlayers.Count + 1 + "Player";
+        Debug.Log("This");
+    }
+    
+
 }

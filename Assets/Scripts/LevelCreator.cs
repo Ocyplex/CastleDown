@@ -9,6 +9,7 @@ public class LevelCreator : MonoBehaviour
     public Wall myWall;
     public ShowCube myShowCube;
     public Player myPlayer;
+    private GameMaster myGameMaster;
     public Gun myGun;
     public GameObject myTower;
     public PickAble[] myPickable = new PickAble[3];
@@ -23,6 +24,7 @@ public class LevelCreator : MonoBehaviour
 
     private void Awake()
     {
+        myGameMaster = GetComponent<GameMaster>();
         CreateWallPos();
         CreateWalls();
         CreateTower();
@@ -122,7 +124,11 @@ public class LevelCreator : MonoBehaviour
 
     public void SpawnPlayer()
     {
-        Instantiate(myPlayer, new Vector3(levelSize / 2f, 1f, levelSize / 2f), Quaternion.identity);
+        for (int i = 0; i < myGameMaster.myPlayers.Count; i++)
+        {
+            myGameMaster.myPlayers[i].transform.position = new Vector3(3+i*3, 1, 3 + i * 3);
+            myGameMaster.myPlayers[i].gameObject.SetActive(true);
+        }
     }
 
     public void CheckCubeAmount()
@@ -189,5 +195,9 @@ public class LevelCreator : MonoBehaviour
         }
         Debug.Log("Blue:" + blue + " Red:" + red + " Green:" + green);
     }
+
+
+
+
 }
 
